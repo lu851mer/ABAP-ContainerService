@@ -168,7 +168,7 @@ CLASS lhc_bestellung IMPLEMENTATION.
   METHOD validateDate.
   READ ENTITIES OF Z_KUNDE123_DATAMODELL IN LOCAL MODE
       ENTITY Bestellung
-        FIELDS ( Abholungsdatum ) WITH CORRESPONDING #( keys )
+        FIELDS ( Abholungsdatum Lieferungsdatum ) WITH CORRESPONDING #( keys )
       RESULT DATA(bestellungen).
 
     LOOP AT bestellungen INTO DATA(bestellung).
@@ -177,16 +177,28 @@ CLASS lhc_bestellung IMPLEMENTATION.
                        %state_area = 'VALIDATE_DATES' )
         TO reported-bestellung.
 
-      IF bestellung-Abholungsdatum < cl_abap_context_info=>get_system_date( ).
+      IF bestellung-Lieferungsdatum < cl_abap_context_info=>get_system_date( ).
         APPEND VALUE #( %tky = bestellung-%tky ) TO failed-bestellung.
         APPEND VALUE #( %tky               = bestellung-%tky
                         %state_area        = 'VALIDATE_DATES'
                         %msg               = NEW Z_123_MESSAGE(
                                                  severity  = if_abap_behv_message=>severity-error
-                                                 textid    = Z_123_MESSAGE=>delivery_before_system_date
-                                                 Abholungsdatum = bestellung-Abholungsdatum )
+                                                 textid    = Z_123_MESSAGE=>delivery_after_system_date
+                                                 Lieferungsdatum = bestellung-Lieferungsdatum )
 
-                        %element-Abholungsdatum   = if_abap_behv=>mk-on ) TO reported-bestellung.
+                        %element-Lieferungsdatum   = if_abap_behv=>mk-on ) TO reported-bestellung.
+
+       ELSEIF bestellung-Abholungsdatum < bestellung-Lieferungsdatum.
+        APPEND VALUE #( %tky               = bestellung-%tky ) TO failed-bestellung.
+        APPEND VALUE #( %tky               = bestellung-%tky
+                        %state_area        = 'VALIDATE_DATES'
+                        %msg               = NEW Z_123_MESSAGE(
+                                                 severity  = if_abap_behv_message=>severity-error
+                                                 textid    = Z_123_MESSAGE=>pickup_after_deliverydate
+                                                 abholungsdatum = bestellung-abholungsdatum
+                                                 lieferungsdatum = bestellung-lieferungsdatum )
+                        %element-Abholungsdatum = if_abap_behv=>mk-on
+                        %element-Lieferungsdatum = if_abap_behv=>mk-on ) TO reported-bestellung.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.

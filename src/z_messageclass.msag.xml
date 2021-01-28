@@ -24,7 +24,13 @@
      <SPRSL>E</SPRSL>
      <ARBGB>Z_MESSAGECLASS</ARBGB>
      <MSGNR>003</MSGNR>
-     <TEXT>Das Abholungsdatum &amp;1 muss später als das aktuelle Datum sein</TEXT>
+     <TEXT>Das Lieferungsdatum &amp;1 muss später als das aktuelle Datum sein</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_MESSAGECLASS</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Das Lieferungsdatum &amp;1 muss früher sein als das Abholungsdatum &amp;2</TEXT>
     </T100>
    </T100>
   </asx:values>

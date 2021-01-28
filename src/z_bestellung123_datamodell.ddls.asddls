@@ -16,6 +16,7 @@ define view entity Z_Bestellung123_DATAMODELL
   key  bestellung_uid as BestellungUID,
        bestellung_id as BestellungID,
        bestellung_kunde_uid as KundeUID,
+       bestellung_lieferungsdatum as Lieferungsdatum,
        bestellung_abholungsdatum as Abholungsdatum,
        bestellung_kommentar as Kommentar,
        bestellung_status as Status,

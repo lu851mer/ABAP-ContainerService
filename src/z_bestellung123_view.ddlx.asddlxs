@@ -37,20 +37,23 @@ annotate view Z_BESTELLUNG123_VIEW with
           identification: [ { position: 30 } ]}
   BestellungID;
 
+ @UI: {  lineItem:       [ { position: 50, label: 'Lieferungsdatum' } ],
+          identification: [ { position: 50, label: 'Lieferungsdatum'}] }
+  Lieferungsdatum;
 
-  @UI: {  lineItem:       [ { position: 40 } ],
-          identification: [ { position: 40 } ] }
+ @UI: {  lineItem:       [ { position: 60, label: 'Abholungsdatum' } ],
+          identification: [ { position: 60, label: 'Abholungsdatum'}] }
   Abholungsdatum;
 
-  @UI: {  lineItem:       [ { position: 50 } ],
-          identification: [ { position: 50 } ] }
+  @UI: {  lineItem:       [ { position: 70 } ],
+          identification: [ { position: 70 } ] }
   Kommentar;
 
-  @UI: {  lineItem:       [ { position: 60 }
+  @UI: {  lineItem:       [ { position: 80 }
                             , { type: #FOR_ACTION, dataAction: 'acceptBestellung', label: 'Accept Bestellung' },
                             { type: #FOR_ACTION, dataAction: 'finishBestellung', label: 'Finish Bestellung' } 
                             ],
-          identification: [ { position: 60 }
+          identification: [ { position: 80 }
                             , { type: #FOR_ACTION, dataAction: 'acceptBestellung', label: 'Accept Bestellung' },
                             { type: #FOR_ACTION, dataAction: 'finishBestellung', label: 'Finish Bestellung' } 
                             ] }

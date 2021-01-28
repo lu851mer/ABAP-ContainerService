@@ -19,7 +19,10 @@ define view entity Z_BESTELLUNG123_VIEW
       _Kunde.KundeID as KundeID,
       _Kunde.Vorname as KundeVorname,
       _Kunde.Nachname as KundeNachname,
+      @Search.defaultSearchElement: true
+      @Search.fuzzinessThreshold: 0.8
       BestellungID,
+      Lieferungsdatum,
       Abholungsdatum,
       Kommentar,
       Status,

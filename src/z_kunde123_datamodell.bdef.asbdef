@@ -70,13 +70,14 @@ etag master Aktualisierungsdatum
     determination createBestellungID on save { create;}
     determination setInitialStatus on modify { create;}
 
-    validation validateDate on save { field Abholungsdatum; create; }
+    validation validateDate on save { field Lieferungsdatum, Abholungsdatum; create; }
 
    mapping for ZBESTELLUNG123
    {
      BestellungUID     = bestellung_uid;
      BestellungID           = bestellung_id;
      KundeUID           = bestellung_kunde_uid;
+     Lieferungsdatum = bestellung_lieferungsdatum;
      Abholungsdatum         = bestellung_abholungsdatum;
      Kommentar          = bestellung_kommentar;
      Status            = bestellung_status;
