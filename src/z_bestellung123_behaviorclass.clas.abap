@@ -1,0 +1,5 @@
+CLASS z_bestellung123_behaviorclass DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF z_kunde123_datamodell.
+ENDCLASS.
+
+CLASS z_bestellung123_behaviorclass IMPLEMENTATION.
+ENDCLASS.

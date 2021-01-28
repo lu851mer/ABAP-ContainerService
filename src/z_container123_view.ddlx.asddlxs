@@ -1,0 +1,58 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Container',
+                typeNamePlural: 'Container',
+                title: { type: #STANDARD, label: 'Travel', value: 'ContainerID' } },
+presentationVariant: [{ sortOrder: [{ by: 'ContainerID', direction:  #DESC }], visualizations: [{type: #AS_LINEITEM}] }] }
+
+annotate view Z_CONTAINER123_VIEW with
+{
+  @UI.facet: [ { id:              'Container',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Container',
+                 position:        10 } ]
+
+  @UI.hidden: true
+  ContainerUID;
+
+  @UI: {  lineItem:       [ { position: 10 } ],
+          identification: [ { position: 10 } ] }
+  ContainerID;
+  
+  @UI: { lineItem:       [ { position: 20, label: 'Abfall ID' } ],
+         identification: [ { position: 20, label: 'Abfall ID' } ],
+         selectionField: [ { position: 10 } ] }
+ AbfallID;
+  
+  @UI: {  lineItem:       [ { position: 30 } ],
+          identification: [ { position: 30 } ],
+          selectionField: [ { position: 30 } ] }
+  Kategorie;
+  
+@UI: { lineItem:       [ { position: 40, label: 'Bestellung ID' } ],
+         identification: [ { position: 40, label: 'Bestellung ID'} ],
+         selectionField: [ { position: 40 } ] }
+ BestellungID;
+ 
+
+   @UI: {  lineItem:       [ { position: 50 }
+                            , { type: #FOR_ACTION, dataAction: 'containerStatusTrue', label: 'Container free' },
+                            { type: #FOR_ACTION, dataAction: 'containerStatusFalse', label: 'Container loaded' } 
+                            ],
+          identification: [ { position: 50 }
+                            , { type: #FOR_ACTION, dataAction: 'containerStatusTrue', label: 'Container free' },
+                            { type: #FOR_ACTION, dataAction: 'containerStatusFalse', label: 'Container loaded' } 
+                            ] }
+  Verfuegbarkeit;
+
+  @UI: {  lineItem:       [ { position: 60 } ],
+          identification: [ { position: 60 } ] }
+  Gewicht;
+
+  @UI.hidden: true
+  Erstellungsdatum;
+ 
+  @UI.hidden: true
+  Aktualisierungsdatum;
+}

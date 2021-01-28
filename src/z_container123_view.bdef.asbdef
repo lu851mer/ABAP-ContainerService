@@ -1,0 +1,13 @@
+projection;
+use draft;
+
+define behavior for Z_CONTAINER123_VIEW alias Container
+use etag
+{
+  use create;
+  use update;
+  use delete;
+
+  use action containerStatusTrue;
+  use action containerStatusFalse;
+}

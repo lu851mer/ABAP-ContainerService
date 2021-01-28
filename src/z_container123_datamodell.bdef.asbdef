@@ -1,0 +1,53 @@
+managed;
+with draft;
+
+define behavior for Z_CONTAINER123_DATAMODELL alias Container
+implementation in class Z_CONTAINER123_BEHAVIORCLASS unique
+persistent table ZCONTAINER123
+draft table ZCONTAINER123D
+// Lock auf allen Daten beim bearbeiten --> Abbrechen und Daten sind noch vorhanden und mit Draft gekennzeichnet
+lock master total etag Aktualisierungsdatum
+// Mit diesem Wert wird verglichen --> Protokollierwert
+etag master Aktualisierungsdatum
+{
+  create;
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) ContainerUID;
+   field ( readonly  ) ContainerID, Kategorie, Verfuegbarkeit;
+   field ( readonly  ) Erstellungsdatum, Aktualisierungsdatum;
+   field (mandatory) AbfallID;
+
+// Es werden Buttons im Interface erstellt, welche bestimmte Aktionen durchführen
+// Hier: Container Status auf True oder False setzen
+  action ( features : instance ) containerStatusTrue result [1] $self;
+  action ( features : instance ) containerStatusFalse result [1] $self;
+
+// determinations werden durch bestimmte Actions getriggert
+// wird getriggert beim Erstellen eines Containers --> ID wird automatisiert erzeugt
+determination createContainerID on save {create;}
+
+// Zum Überprüfen von Datenkonsistenz
+// Wird getriggert und können Nachrichten an den Benutzer zurückgeben und die Aktion ablehnen
+validation abfallid_unknown   on save { field AbfallID; create; }
+validation bestellungid_unknown on save { field BestellungID; create; }
+
+// Welche Validierungen ausgeführt werden müssen, bevor die Daten "gedrafted" werden
+draft determine action Prepare  {
+   validation abfallid_unknown;
+   validation bestellungid_unknown;
+}
+
+// mappt die Daten auf die CDS-VIEW
+  mapping for ZCONTAINER123{
+      ContainerUID       = container_uid;
+      ContainerID         = container_id;
+      Gewicht        = container_gewicht;
+      Verfuegbarkeit         = container_verfuegbar;
+      Erstellungsdatum               = container_erstelltdatum;
+      Aktualisierungsdatum             = container_aktualisiertdatum;
+
+  }
+
+}

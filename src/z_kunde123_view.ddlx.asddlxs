@@ -1,0 +1,71 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Kunde',
+                typeNamePlural: 'Kunden',
+                title: { type: #STANDARD, label: 'Kunde', value: 'KundeID' } },
+  presentationVariant: [{ sortOrder: [{ by: 'KundeID', direction:  #DESC }], visualizations: [{type: #AS_LINEITEM}] }] }
+
+annotate view Z_KUNDE123_VIEW with
+{
+  @UI.facet: [ { id:              'Kunde',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Kunde',
+                 position:        10 },
+                   { id:          'Bestellung',
+                 purpose:         #STANDARD,
+                 type:            #LINEITEM_REFERENCE,
+                 label:           'Bestellung',
+                 position:        20,
+                 targetElement:   '_Bestellung'}]
+
+  @UI.hidden: true
+  KundeUID;
+
+  @UI: {  lineItem:       [ { position: 10 } ],
+          identification: [ { position: 10 } ]}
+  KundeID;
+
+  @UI: {  lineItem:       [ { position: 20 } ],
+          identification: [ { position: 20 } ]}
+  Vorname;
+  
+    @UI: {  lineItem:       [ { position: 30 } ],
+          identification: [ { position: 30 } ]}
+  Nachname;
+
+
+  @UI: {  lineItem:       [ { position: 40 } ],
+          identification: [ { position: 40 } ] }
+  Strasse;
+
+  @UI: {  lineItem:       [ { position: 50 } ],
+          identification: [ { position: 50 } ] }
+  Hausnummer;
+
+  @UI: {  lineItem:       [ { position: 60 } ],
+          identification: [ { position: 60 } ] }
+  Stadt;
+
+  @UI: {  lineItem:       [ { position: 70 } ],
+          identification: [ { position: 70 } ] }
+  PLZ;
+
+  @UI: {  lineItem:       [ { position: 80 } ],
+          identification: [ { position: 80 } ] }
+  Firma;
+
+ @UI: {  lineItem:       [ { position: 90 } ],
+          identification: [ { position: 90 } ] }
+  Ansprechpartner;
+
+  @UI.hidden: true
+  Erstellungsdatum;
+    
+  @UI.hidden: true
+  Aktualisierungsdatum;
+  
+  @UI.selectionField: [ { element: '_Bestellung.BestellungUID', position: 80 } ]
+  _Bestellung;
+
+}

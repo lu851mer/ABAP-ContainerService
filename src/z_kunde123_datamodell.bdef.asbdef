@@ -1,0 +1,86 @@
+managed;
+with draft;
+
+define behavior for Z_KUNDE123_DATAMODELL alias Kunde
+implementation in class Z_Kunde123_BEHAVIORCLASS unique
+persistent table ZKUNDE123
+// Lock auf allen Daten beim bearbeiten --> Abbrechen und Daten sind noch vorhanden und mit Draft gekennzeichnet
+draft table ZKUNDE123D
+lock master total etag Aktualisierungsdatum
+// Mit diesem Wert wird verglichen --> Protokollierwert
+etag master Aktualisierungsdatum
+{
+  create;
+  update;
+  delete;
+  association _Bestellung { create; with draft;}
+
+   field ( numbering : managed, readonly ) KundeUID;
+   field ( readonly  ) KundeID;
+   field (mandatory) Vorname, Nachname, Strasse, Hausnummer, Stadt, PLZ;
+   field ( readonly  ) Erstellungsdatum, Aktualisierungsdatum;
+
+// determinations werden durch bestimmte Actions getriggert
+// wird getriggert beim Erstellen eines Kunden --> ID wird automatisiert erzeugt
+   determination createKundeID on save { create;}
+
+   mapping for ZKUNDE123
+   {
+     KundeUID         = kunde_uid;
+     KundeID           = kunde_id;
+     Vorname           = kunde_vorname;
+     Nachname         = kunde_nachname;
+     Strasse          = kunde_strasse;
+     Hausnummer            = kunde_hausnr;
+     Stadt         = kunde_stadt;
+     PLZ         = kunde_plz;
+     Firma       = kunde_firma;
+     Ansprechpartner        = kunde_ansprechpartner;
+     Aktualisierungsdatum       = kunde_erstelltdatum;
+     Erstellungsdatum          = kunde_aktualisiertdatum;
+
+   }
+}
+
+define behavior for Z_Bestellung123_DATAMODELL alias Bestellung
+implementation in class Z_Bestellung123_BEHAVIORCLASS unique
+persistent table ZBESTELLUNG123
+draft table ZBESTELLUNG123D
+lock dependent by _Kunde
+// Mit diesem Wert wird verglichen --> Protokollierwert
+etag master Aktualisierungsdatum
+ {
+   update;
+   delete;
+
+   association _Kunde { with draft;}
+
+   field ( numbering : managed, readonly ) BestellungUID;
+   field ( readonly ) BestellungID, KundeUID, Status;
+   field ( readonly ) Erstellungsdatum, Aktualisierungsdatum;
+
+// Es werden Buttons im Interface erstellt, welche bestimmte Aktionen durchführen
+// Hier: Bestellung Status auf accept oder finish setzen
+    action ( features : instance ) acceptBestellung result [1] $self;
+    action ( features : instance ) finishBestellung result [1] $self;
+
+// determinations werden durch bestimmte Actions getriggert
+// wird getriggert beim Erstellen eines Containers --> ID wird automatisiert erzeugt
+// wird getriggert beim Erstellen eine Containers --> Status wird automatisiert auf EI gesetzt
+    determination createBestellungID on save { create;}
+    determination setInitialStatus on modify { create;}
+
+    validation validateDate on save { field Abholungsdatum; create; }
+
+   mapping for ZBESTELLUNG123
+   {
+     BestellungUID     = bestellung_uid;
+     BestellungID           = bestellung_id;
+     KundeUID           = bestellung_kunde_uid;
+     Abholungsdatum         = bestellung_abholungsdatum;
+     Kommentar          = bestellung_kommentar;
+     Status            = bestellung_status;
+     Aktualisierungsdatum       = bestellung_aktualisiertdatum;
+     Erstellungsdatum          = bestellung_erstelltdatum;
+   }
+ }

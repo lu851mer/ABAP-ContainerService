@@ -1,0 +1,65 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Bestellung',
+                typeNamePlural: 'Bestellungen',
+                title: { type: #STANDARD, label: 'Travel', value: 'BestellungID' } },
+  presentationVariant: [{ sortOrder: [{ by: 'BestellungID', direction:  #DESC }], visualizations: [{type: #AS_LINEITEM}] }] }
+
+annotate view Z_BESTELLUNG123_VIEW with
+{
+  @UI.facet: [ { id:              'Bestellung',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Bestellung',
+                 position:        10 } ]
+
+  @UI: {  lineItem:       [ { position: 10 } ],
+          identification: [ { position: 10 } ] }
+  BestellungUID;
+
+  @UI.hidden: true
+  KundeUID;
+  
+   @UI: {  lineItem:       [ { position: 21 } ],
+          identification: [ { position: 21 } ]}
+  KundeID;
+  
+  
+   @UI: {  lineItem:       [ { position: 22 } ],
+          identification: [ { position: 22 } ]}
+  KundeVorname;
+  
+   @UI: {  lineItem:       [ { position: 23 } ],
+          identification: [ { position: 23 } ] }
+  KundeNachname;
+  
+  @UI: {  lineItem:       [ { position: 30 } ],
+          identification: [ { position: 30 } ]}
+  BestellungID;
+
+
+  @UI: {  lineItem:       [ { position: 40 } ],
+          identification: [ { position: 40 } ] }
+  Abholungsdatum;
+
+  @UI: {  lineItem:       [ { position: 50 } ],
+          identification: [ { position: 50 } ] }
+  Kommentar;
+
+  @UI: {  lineItem:       [ { position: 60 }
+                            , { type: #FOR_ACTION, dataAction: 'acceptBestellung', label: 'Accept Bestellung' },
+                            { type: #FOR_ACTION, dataAction: 'finishBestellung', label: 'Finish Bestellung' } 
+                            ],
+          identification: [ { position: 60 }
+                            , { type: #FOR_ACTION, dataAction: 'acceptBestellung', label: 'Accept Bestellung' },
+                            { type: #FOR_ACTION, dataAction: 'finishBestellung', label: 'Finish Bestellung' } 
+                            ] }
+  Status;
+
+  @UI.hidden: true
+  Erstellungsdatum;
+
+  @UI.hidden: true
+  Aktualisierungsdatum;
+  
+}

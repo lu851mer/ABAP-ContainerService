@@ -1,0 +1,7 @@
+@EndUserText.label: 'Serv Definition for Container'
+define service Z_Kunde123_SD {
+  expose Z_BESTELLUNG123_VIEW as Bestellung;
+  expose Z_KUNDE123_VIEW as Kunde;
+  expose Z_CONTAINER123_VIEW as Container;
+  expose Z_ABFALL123_VIEW as Abfall;
+}

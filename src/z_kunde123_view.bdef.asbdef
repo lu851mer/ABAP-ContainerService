@@ -1,0 +1,23 @@
+projection;
+use draft;
+
+define behavior for Z_KUNDE123_VIEW alias Kunde
+
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Bestellung { create;with draft; }
+}
+
+define behavior for Z_BESTELLUNG123_VIEW alias Bestellung
+
+{
+  use update;
+  use delete;
+
+  use association _Kunde { with draft; }
+  use action acceptBestellung;
+  use action finishBestellung;
+}
